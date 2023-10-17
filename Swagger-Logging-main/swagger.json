@@ -1,0 +1,442 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger Petstore - OpenAPI 3.0",
+    "version": "1.0.11"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Everything about Users"
+    }
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Register new user",
+        "description": "Register new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsersInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersOutput"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Login user",
+        "description": "",
+        "operationId": "loginUser",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "The email for login",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login in clear text",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "User ID"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "User email"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "description": "User gender"
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "User role"
+                    },
+                    "token": {
+                      "type": "string",
+                      "description": "Authentication token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all users (10 list)",
+        "description": "Get all users",
+        "operationId": "findUsers",
+        "responses": {
+          "200": {
+            "description": "Users fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersOutput"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key1": []
+          }
+        ]
+      }
+    },
+    "/movies": {
+      "get": {
+        "tags": [
+          "Movies"
+        ],
+        "summary": "Get all movies (10 list)",
+        "description": "Get all movies",
+        "operationId": "findMovie",
+        "responses": {
+          "200": {
+            "description": "Movies fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MoviesOutput"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key1": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Movies"
+        ],
+        "summary": "Create movies",
+        "description": "Create movies with authentication",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MoviesInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Movie created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MoviesOutput"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        },
+        "security": [
+          {
+            "api_key1": []
+          }
+        ]
+      }
+    },
+    "/movies/{id}": {
+      "get": {
+        "tags": [
+          "Movies"
+        ],
+        "summary": "Get detail movie by ID",
+        "description": "Get detail movie by ID",
+        "operationId": "findMovieById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MoviesOutput"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key1": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Movies"
+        ],
+        "summary": "Update movie by ID",
+        "description": "Update movie by ID",
+        "operationId": "updateMovieById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the movie to update",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "movie",
+            "in": "query",
+            "description": "Updated movie object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MoviesInput"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Movie updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MoviesOutput"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key1": []
+          },
+          {
+            "api_key2": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Movies"
+        ],
+        "summary": "Deletes a movie",
+        "description": "delete a movie",
+        "operationId": "deleteMovie",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Pet id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Movie deleted successfully"
+          }
+        },
+        "security": [
+          {
+            "api_key1": []
+          },
+          {
+            "api_key2": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UsersInput": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "ari@gmail.com"
+          },
+          "gender": {
+            "type": "string",
+            "example": "male"
+          },
+          "password": {
+            "type": "string",
+            "example": "asdf123"
+          },
+          "role": {
+            "type": "string",
+            "example": "admin"
+          }
+        }
+      },
+      "UsersOutput": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 10
+          },
+          "email": {
+            "type": "string",
+            "example": "ari@gmail.com"
+          },
+          "gender": {
+            "type": "string",
+            "example": "male"
+          },
+          "password": {
+            "type": "string",
+            "example": "asdf123"
+          },
+          "role": {
+            "type": "string",
+            "example": "admin"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "MoviesInput": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Alive"
+          },
+          "genres": {
+            "type": "string",
+            "example": "commedy"
+          },
+          "year": {
+            "type": "string",
+            "example": 2021
+          }
+        }
+      },
+      "MoviesOutput": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 10
+          },
+          "title": {
+            "type": "string",
+            "example": "Alive"
+          },
+          "genres": {
+            "type": "string",
+            "example": "commedy"
+          },
+          "year": {
+            "type": "string",
+            "example": 2021
+          },
+          "user_id": {
+            "type": "integer",
+            "example": 1
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "api_key1": {
+        "type": "apiKey",
+        "name": "authentication",
+        "in": "header"
+      },
+      "api_key2": {
+        "type": "apiKey",
+        "name": "authorization",
+        "in": "header"
+      }
+    }
+  }
+}
